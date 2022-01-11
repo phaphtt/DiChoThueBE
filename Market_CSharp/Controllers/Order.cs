@@ -22,6 +22,7 @@ namespace Market_CSharp.Controllers
             Models.MongoHelper.ConnectToMongoService();
             var order = Models.MongoHelper.database.GetCollection<Models.Order>("order");
             var order_item = Models.MongoHelper.database.GetCollection<Models.OrderItem>("order_item");
+            var item_cart = Models.MongoHelper.database.GetCollection<Models.CartDetail>("cart_detail");
 
             Models.Order order_new = new Models.Order();
             order_new.customer_id = cart.customer_id;
@@ -29,7 +30,7 @@ namespace Market_CSharp.Controllers
             order_new.customer_phone = cart.customer_phone;
             order_new.customer_address = cart.customer_address;
             order_new.customer_region = cart.customer_region;
-            order_new.order_date = DateTime.ParseExact("2021-01-10", "yyyy-MM-dd", CultureInfo.InvariantCulture);
+            order_new.order_date = DateTime.Today;
             order_new.time = cart.time;
             order_new.payment_type = cart.payment_type;
             order_new.total_amount = cart.total_amount;
@@ -52,8 +53,11 @@ namespace Market_CSharp.Controllers
                 order_item_new.amount = item.amount;
                 order_item_new.total = item.price * item.amount;
                 order_item_new.cancel = false;
-                order_item_new.order_date = DateTime.ParseExact("2021-01-10", "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                order_item_new.order_date = DateTime.Today;
                 order_item.InsertOne(order_item_new);
+                var filter = Builders<CartDetail>.Filter.Where(c => c.id == item.id);
+                var update = Builders<CartDetail>.Update.Set("activity", false);
+                item_cart.UpdateOne(filter, update);
             }
             return 1;
         }

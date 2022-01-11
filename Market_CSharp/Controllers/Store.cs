@@ -64,5 +64,37 @@ namespace Market_CSharp.Controllers
             order_item.UpdateMany(filter2, update2);
             return 1;
         }
+
+        [EnableCors("_myAllowSpecificOrigins")]
+        [HttpPost("product/add")]
+        public int AddProduct([FromBody] Models.ProductInsert p)
+        {
+            //Connect DB:
+            Models.MongoHelper.ConnectToMongoService();
+            var product = Models.MongoHelper.database.GetCollection<Models.Product>("product");
+            var product_type = Models.MongoHelper.database.GetCollection<Models.ProductType>("product_type");
+
+            var exists = product.Find(o => o.activity == true && o.name == p.product_name && o.store_id == p.store_id);
+
+            if (exists.CountDocuments() != 0)
+                return -1;
+
+            var type = product_type.Find(o => o.id == p.type_id);
+            Models.Product product_new = new Models.Product();
+
+            product_new.store_id = p.store_id;
+            product_new.type_id = p.type_id;
+            product_new.type_name = type.FirstOrDefault().name;
+            product_new.name = p.product_name;
+            product_new.price = p.price;
+            product_new.unit = p.unit;
+            product_new.status = "";
+            product_new.activity = true;
+            product_new.origin = p.origin;
+            product_new.create_date = DateTime.Today;
+            product_new.update_date = DateTime.Today;
+            product.InsertOne(product_new);
+            return 1; 
+        }
     }
 }
