@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "dgSpecHash": "dpyfDvtv7lZFxP07VF5Ou6KPi21FUlkM2/tFb3Qo6woO2gp6+ZOJYPTLFUqdrTL3fFUSDCYIBz7cUfjHqFlk+w==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\phaph\\Desktop\\Market BE\\Market_CSharp\\Market_CSharp\\Market_CSharp.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\phaph\\.nuget\\packages\\dnsclient\\1.4.0\\dnsclient.1.4.0.nupkg.sha512",
+    "C:\\Users\\phaph\\.nuget\\packages\\mongodb.bson\\2.14.1\\mongodb.bson.2.14.1.nupkg.sha512",
+    "C:\\Users\\phaph\\.nuget\\packages\\mongodb.driver\\2.14.1\\mongodb.driver.2.14.1.nupkg.sha512",
+    "C:\\Users\\phaph\\.nuget\\packages\\mongodb.driver.core\\2.14.1\\mongodb.driver.core.2.14.1.nupkg.sha512",
+    "C:\\Users\\phaph\\.nuget\\packages\\mongodb.libmongocrypt\\1.3.0\\mongodb.libmongocrypt.1.3.0.nupkg.sha512",
+    "C:\\Users\\phaph\\.nuget\\packages\\sharpcompress\\0.30.1\\sharpcompress.0.30.1.nupkg.sha512",
+    "C:\\Users\\phaph\\.nuget\\packages\\system.buffers\\4.5.1\\system.buffers.4.5.1.nupkg.sha512",
+    "C:\\Users\\phaph\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\5.0.0\\system.runtime.compilerservices.unsafe.5.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
