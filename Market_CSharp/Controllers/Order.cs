@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Market_CSharp.Models;
 using MongoDB.Driver;
 using Microsoft.AspNetCore.Cors;
+using System.Globalization;
 
 namespace Market_CSharp.Controllers
 {
@@ -28,7 +29,7 @@ namespace Market_CSharp.Controllers
             order_new.customer_phone = cart.customer_phone;
             order_new.customer_address = cart.customer_address;
             order_new.customer_region = cart.customer_region;
-            order_new.order_date = DateTime.Today;
+            order_new.order_date = DateTime.ParseExact("2021-01-10", "yyyy-MM-dd", CultureInfo.InvariantCulture);
             order_new.time = cart.time;
             order_new.payment_type = cart.payment_type;
             order_new.total_amount = cart.total_amount;
@@ -51,7 +52,7 @@ namespace Market_CSharp.Controllers
                 order_item_new.amount = item.amount;
                 order_item_new.total = item.price * item.amount;
                 order_item_new.cancel = false;
-                order_item_new.order_date = DateTime.Today;
+                order_item_new.order_date = DateTime.ParseExact("2021-01-10", "yyyy-MM-dd", CultureInfo.InvariantCulture);
                 order_item.InsertOne(order_item_new);
             }
             return 1;
