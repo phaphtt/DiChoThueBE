@@ -91,6 +91,7 @@ namespace Market_CSharp.Controllers
             product_new.status = "";
             product_new.activity = true;
             product_new.origin = p.origin;
+            product_new.url_image = p.url_image;
             product_new.create_date = DateTime.Today;
             product_new.update_date = DateTime.Today;
             product.InsertOne(product_new);
