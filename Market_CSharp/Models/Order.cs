@@ -94,4 +94,10 @@ namespace Market_CSharp.Models
         [BsonElement("order_date")]
         public DateTime order_date { get; set; }
     }
+
+    public class InfoOrder
+    {
+        public Order order { get; set; }
+        public List<OrderItem> item { get; set; }
+    }
 }

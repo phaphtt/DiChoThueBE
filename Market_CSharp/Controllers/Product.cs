@@ -22,7 +22,7 @@ namespace Market_CSharp.Controllers
             var product = Models.MongoHelper.database.GetCollection<Models.Product>("product");
             var list = new Models.StoreProduct();
             list.store = store.Find(s => s.id == store_id).First();
-            list.products = product.Find(s => s.store_id == store_id).ToList();
+            list.products = product.Find(s => s.store_id == store_id && s.activity == true).ToList();
             yield return list;
         }
 

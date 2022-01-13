@@ -97,5 +97,48 @@ namespace Market_CSharp.Controllers
             product.InsertOne(product_new);
             return 1; 
         }
+
+        [EnableCors("_myAllowSpecificOrigins")]
+        [HttpPatch("product/update/{product_id}")]
+        public int UpdateProduct(string product_id, [FromBody] Models.ProductInsert p)
+        {
+            //Connect DB:
+            Models.MongoHelper.ConnectToMongoService();
+            var product = Models.MongoHelper.database.GetCollection<Models.Product>("product");
+            var product_type = Models.MongoHelper.database.GetCollection<Models.ProductType>("product_type");
+
+            var exists = product.Find(o => o.id == product_id);
+
+            if (exists.CountDocuments() == 0)
+                return -1;
+
+            var type = product_type.Find(o => o.id == p.type_id);
+            var filter = Builders<Models.Product>.Filter.Where(c => c.id == product_id);
+            var update = Builders<Models.Product>.Update.Set("activity", exists.FirstOrDefault().activity)
+                                                        .Set("type_id", p.type_id)
+                                                        .Set("type_name", type.FirstOrDefault().name)
+                                                        .Set("name", p.product_name)
+                                                        .Set("price", p.price)
+                                                        .Set("unit", p.unit)
+                                                        .Set("origin", p.origin)
+                                                        .Set("url_image", p.url_image)
+                                                        .Set("update_date", DateTime.Today);
+            product.UpdateOne(filter, update);
+            return 1;
+        }
+
+        [EnableCors("_myAllowSpecificOrigins")]
+        [HttpDelete("product/delete/{product_id}")]
+        public int DeleteProduct(string product_id)
+        {
+            //Connect DB:
+            Models.MongoHelper.ConnectToMongoService();
+            var product = Models.MongoHelper.database.GetCollection<Models.Product>("product");
+           
+            var filter = Builders<Models.Product>.Filter.Where(c => c.id == product_id);
+            var update = Builders<Models.Product>.Update.Set("activity", false);
+            product.UpdateOne(filter, update);
+            return 1;
+        }
     }
 }

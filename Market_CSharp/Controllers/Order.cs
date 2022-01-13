@@ -61,5 +61,20 @@ namespace Market_CSharp.Controllers
             }
             return 1;
         }
+
+        [EnableCors("_myAllowSpecificOrigins")]
+        [HttpGet("info/{order_id}")]
+        public IEnumerable<Models.InfoOrder> InfoOrder(string order_id)
+        {
+            //Connect DB:
+            Models.MongoHelper.ConnectToMongoService();
+            var order = Models.MongoHelper.database.GetCollection<Models.Order>("order");
+            var order_item = Models.MongoHelper.database.GetCollection<Models.OrderItem>("order_item");
+
+            var list = new InfoOrder();
+            list.order = order.Find(s => s.id == order_id).First();
+            list.item = order_item.Find(s => s.order_id == order_id).ToList();
+            yield return list;            
+        }
     }
 }
